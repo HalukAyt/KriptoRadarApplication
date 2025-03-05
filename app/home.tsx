@@ -42,6 +42,10 @@ const Home = () => {
       {isAuthenticated ? (
         <>
           <Text>Welcome to the Home Screen!</Text>
+          <Button
+                  title="ORDERS"
+                  onPress={() => router.push("/order")} // Register ekranına yönlendir
+                />
           <Button title="Logout" onPress={handleLogout} />
         </>
       ) : (
