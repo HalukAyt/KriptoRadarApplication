@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Alert, Text } from "react-native";
+import { View, TextInput, Button, Alert, Text, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../api"; // Kullanıcı giriş fonksiyonu
@@ -30,7 +30,7 @@ const Login = () => {
         if (apiKey && apiSecret) {
           console.log("✅ API bilgileri kaydedildi!");
         }
-        
+
         // Home sayfasına yönlendir
         router.replace("/home");
       } else {
@@ -47,26 +47,76 @@ const Login = () => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <ScrollView contentContainerStyle={styles.container}>
       {/* Hata mesajı */}
-      {errorMessage ? <Text style={{ color: "red", marginBottom: 10 }}>{errorMessage}</Text> : null}
+      {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
 
       <TextInput
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        style={{ borderBottomWidth: 1, marginBottom: 10, padding: 5 }}
+        style={styles.input}
       />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={{ borderBottomWidth: 1, marginBottom: 20, padding: 5 }}
+        style={styles.input}
       />
-      <Button title={loading ? "Giriş Yapılıyor..." : "Login"} onPress={handleLogin} disabled={loading} />
-    </View>
+      <Button
+        title={loading ? "Giriş Yapılıyor..." : "Login"}
+        onPress={handleLogin}
+        disabled={loading}
+        color="#4CAF50" // Buton rengi
+      />
+
+      {/* Alt alan - ekstra bilgiler veya yönlendirmeler */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Hesabınız yok mu?</Text>
+        <Text style={styles.signupLink} onPress={() => router.push("/register")}>Kayıt Ol</Text>
+      </View>
+    </ScrollView>
   );
 };
+
+// Stil tanımlamaları
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#00000f",
+  },
+  input: {
+    width: "100%",
+    padding: 12,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    backgroundColor: "#fff",
+  },
+  errorMessage: {
+    color: "red",
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
+  footer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  footerText: {
+    fontSize: 14,
+    color: "#555",
+  },
+  signupLink: {
+    fontSize: 16,
+    color: "#4CAF50",
+    textDecorationLine: "underline",
+    marginTop: 5,
+  },
+});
 
 export default Login;

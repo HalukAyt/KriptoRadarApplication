@@ -9,6 +9,7 @@ export default function Layout() {
       <Stack.Screen name="login" options={{ title: 'Login' , headerShown: false}} />
       <Stack.Screen name="home" options={{ title: 'Home' , headerShown: false}} />
       <Stack.Screen name="order" options={{ title: 'order', headerShown: false}}/>
+      <Stack.Screen name="tradebot" options={{ title: 'Tradebot', headerShown: false}}/>
     </Stack>
   );
 }

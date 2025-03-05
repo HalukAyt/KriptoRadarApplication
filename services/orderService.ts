@@ -58,7 +58,7 @@ export const getUsdtBalance = async (): Promise<string> => {
 };
 
 // ✅ Market Order ile Alım / Satım İşlemi Yap
-export const tradeMarketOrder = async (side: "BUY" | "SELL", quantity: string) => {
+export const tradeMarketOrder = async (p0: string, buyAmount: number, buyPrice: number, side: "BUY" | "SELL", quantity: string) => {
   try {
     const binance = await getBinanceInstance();
     const orderData = {
