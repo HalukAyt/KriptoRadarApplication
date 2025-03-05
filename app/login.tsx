@@ -30,9 +30,9 @@ const Login = () => {
         if (apiKey && apiSecret) {
           console.log("✅ API bilgileri kaydedildi!");
         }
-
+        
         // Home sayfasına yönlendir
-        router.push("/home");
+        router.replace("/home");
       } else {
         setErrorMessage("Geçersiz kullanıcı bilgileri.");
         Alert.alert("Giriş Başarısız", "Geçersiz kullanıcı bilgileri.");
