@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, Text, View, StatusBar, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, StatusBar, TextInput, Button, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons'; // Ionicons import
 import LivePrice from '../LivePrice';
 import TradingViewChart from '../TradingViewChart';
 import { getBtcBalance, getUsdtBalance, tradeMarketOrder, tradeLimitOrder, getLimitOrders } from '../services/orderService';
@@ -14,6 +16,8 @@ export default function Order() {
   const [usdtBalance, setUsdtBalance] = useState('0');
   const [limitOrders, setLimitOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter(); // useRouter hook kullanıyoruz
 
   // ✅ Bakiye verilerini çek
   const fetchBalances = async () => {
@@ -101,6 +105,12 @@ export default function Order() {
   return (
     <ScrollView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      
+      {/* Sol üst köşeye geri butonunu ekleyelim */}
+      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <Ionicons name="arrow-back" size={32} color="#fff" />
+      </TouchableOpacity>
+
       <Text style={styles.title}>KRİPTO RADAR</Text>
 
       <LinearGradient colors={['#00b894', '#1e1e1e']} style={styles.livePriceContainer}>
@@ -172,6 +182,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40,
   },
+  backButton: {
+    position: 'absolute',
+    top: 5,
+    left: 5,
+    padding: 5,
+    zIndex: 10,
+  },
   title: {
     textAlign: 'center',
     fontSize: 32,
@@ -209,7 +226,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     color: '#fff',
     padding: 10,
+    marginBottom: 20,
     borderRadius: 10,
-    marginBottom: 10,
+    fontSize: 18,
   },
 });
