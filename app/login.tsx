@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, Alert } from "react-native";
-import { loginUser } from "../api"; // API fonksiyonunuzu buraya ekleyin
+import { useRouter } from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage importu
+import { loginUser } from "../api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleLogin = async () => {
-    const token = await loginUser(email, password);
+    const token = await loginUser(email, password); // loginUser API fonksiyonunuz
     if (token) {
-      Alert.alert("Login Success", `Token: ${token}`);
+      // Giriş başarılıysa token'ı AsyncStorage'a kaydet
+      await AsyncStorage.setItem("userToken", token);
+      router.push("/home");
     } else {
       Alert.alert("Login Failed", "Invalid credentials");
     }
